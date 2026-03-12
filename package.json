@@ -1,0 +1,16 @@
+{
+  "name": "bathroom-cleaning-tracker",
+  "version": "1.0.0",
+  "description": "Bathroom cleaning tracker with Google Sheets integration",
+  "main": "index.html",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build needed for static files'"
+  },
+  "dependencies": {
+    "googleapis": "^118.0.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}
