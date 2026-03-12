@@ -12,18 +12,14 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #ffffff;
             min-height: 100vh;
             padding: 20px;
         }
         
         .container {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 30px;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
@@ -31,14 +27,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
             gap: 20px;
         }
         
         h1 {
-            color: #333;
-            font-size: 28px;
+            color: #000;
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -1px;
         }
         
         .header-actions {
@@ -48,83 +46,88 @@
         }
         
         button, .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-decoration: none;
             display: inline-block;
+            letter-spacing: 0.3px;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #1f2937;
             color: white;
         }
         
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            background: #111827;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
         .btn-secondary {
-            background: #f0f0f0;
-            color: #333;
-            border: 1px solid #ddd;
+            background: #f3f4f6;
+            color: #1f2937;
+            border: 1px solid #e5e7eb;
         }
         
         .btn-secondary:hover {
-            background: #e0e0e0;
+            background: #e5e7eb;
         }
         
         .filters {
             display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 20px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
         }
         
         .filter-group {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 8px;
         }
         
         .filter-group label {
             font-weight: 600;
-            font-size: 14px;
-            color: #333;
+            font-size: 13px;
+            color: #1f2937;
+            letter-spacing: 0.3px;
         }
         
         select {
-            padding: 8px 12px;
-            border: 2px solid #e0e0e0;
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
             border-radius: 6px;
             font-family: inherit;
             font-size: 14px;
             background: white;
             cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 150px;
         }
         
         select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #1f2937;
+            box-shadow: 0 0 0 3px rgba(31, 41, 55, 0.05);
         }
         
         .loading {
             text-align: center;
-            padding: 40px;
-            color: #666;
+            padding: 60px 20px;
+            color: #9ca3af;
         }
         
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+            border: 2px solid #e5e7eb;
+            border-top: 2px solid #1f2937;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
         }
@@ -137,7 +140,7 @@
         .table-wrapper {
             overflow-x: auto;
             border-radius: 8px;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #e5e7eb;
         }
         
         table {
@@ -147,57 +150,50 @@
         }
         
         thead {
-            background: #f9f9f9;
-            border-bottom: 2px solid #e0e0e0;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
         }
         
         th {
-            padding: 15px;
+            padding: 14px 16px;
             text-align: left;
             font-weight: 600;
-            color: #333;
-            font-size: 14px;
+            color: #1f2937;
+            font-size: 13px;
+            letter-spacing: 0.3px;
         }
         
         td {
-            padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 14px 16px;
+            border-bottom: 1px solid #e5e7eb;
             font-size: 14px;
-            color: #555;
+            color: #374151;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
         }
         
         tr:hover {
-            background: #f9f9f9;
+            background: #f9fafb;
         }
         
         .bathroom-badge {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
+            padding: 4px 10px;
+            border-radius: 16px;
             font-size: 12px;
             font-weight: 600;
             text-transform: capitalize;
-        }
-        
-        .bathroom-badge.mens {
-            background: #e3f2fd;
-            color: #1976d2;
-        }
-        
-        .bathroom-badge.womens {
-            background: #fce4ec;
-            color: #c2185b;
-        }
-        
-        .bathroom-badge.accessible {
-            background: #e0f2f1;
-            color: #00897b;
+            background: #e5e7eb;
+            color: #1f2937;
         }
         
         .tasks-list {
             font-size: 13px;
             line-height: 1.6;
-            max-width: 300px;
+            max-width: 350px;
+            color: #374151;
         }
         
         .task-item {
@@ -207,67 +203,324 @@
         }
         
         .task-item::before {
-            content: '✓';
-            color: #4caf50;
+            content: '∙';
+            color: #6b7280;
             font-weight: bold;
         }
         
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: #999;
+            color: #9ca3af;
         }
         
         .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
+            font-size: 44px;
+            margin-bottom: 16px;
         }
         
         .message {
-            padding: 15px;
-            border-radius: 8px;
+            padding: 14px 16px;
+            border-radius: 6px;
             margin-bottom: 20px;
+            font-size: 14px;
         }
         
         .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fee2e2;
         }
         
         .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #dcfce7;
         }
         
         .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
         }
         
         .stat-card {
-            background: #f9f9f9;
+            background: #f9fafb;
             padding: 20px;
             border-radius: 8px;
             text-align: center;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #e5e7eb;
         }
         
         .stat-value {
             font-size: 28px;
             font-weight: 700;
-            color: #667eea;
-            margin-bottom: 5px;
+            color: #1f2937;
+            margin-bottom: 8px;
         }
         
         .stat-label {
-            font-size: 13px;
-            color: #666;
+            font-size: 12px;
+            color: #6b7280;
             font-weight: 500;
+            letter-spacing: 0.3px;
         }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 30px;
+            }
+            
+            .filters {
+                flex-direction: column;
+                gap: 16px;
+                margin-bottom: 30px;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            select {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 12px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Records</h1>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="switchToForm()">New Record</button>
+                <button class="btn btn-secondary" onclick="goHome()">Back</button>
+            </div>
+        </div>
+        
+        <div id="message"></div>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <label for="bathroomFilter">Bathroom:</label>
+                <select id="bathroomFilter" onchange="applyFilters()">
+                    <option value="all">All Bathrooms</option>
+                    <option value="mens">Mens</option>
+                    <option value="womens">Womens</option>
+                    <option value="accessible">Accessible</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="dateFilter">Date Range:</label>
+                <select id="dateFilter" onchange="applyFilters()">
+                    <option value="all">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="week">Last 7 Days</option>
+                    <option value="month">Last 30 Days</option>
+                </select>
+            </div>
+        </div>
+        
+        <div id="stats" class="stats" style="display: none;"></div>
+        
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Loading records...</p>
+        </div>
+        
+        <div id="content" style="display: none;">
+            <div class="table-wrapper">
+                <table id="recordsTable">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Bathroom</th>
+                            <th>Initials</th>
+                            <th>Tasks Completed</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recordsBody">
+                    </tbody>
+                </table>
+            </div>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-state-icon">📋</div>
+                <p>No cleaning records found.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let allRecords = [];
+        let filteredRecords = [];
+        
+        async function loadRecords() {
+            try {
+                const response = await fetch('/.netlify/functions/get-cleaning-records');
+                if (response.ok) {
+                    allRecords = await response.json();
+                    applyFilters();
+                } else {
+                    showMessage('Error loading records', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Connection error. Please refresh to try again.', 'error');
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+            }
+        }
+        
+        function applyFilters() {
+            const bathroomFilter = document.getElementById('bathroomFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+            
+            filteredRecords = allRecords.filter(record => {
+                // Bathroom filter
+                if (bathroomFilter !== 'all' && record.bathroom !== bathroomFilter) {
+                    return false;
+                }
+                
+                // Date filter
+                if (dateFilter !== 'all') {
+                    const recordDate = new Date(record.datetime);
+                    const now = new Date();
+                    const diffMs = now - recordDate;
+                    const diffDays = diffMs / (1000 * 60 * 60 * 24);
+                    
+                    if (dateFilter === 'today') {
+                        return diffDays <= 1;
+                    } else if (dateFilter === 'week') {
+                        return diffDays <= 7;
+                    } else if (dateFilter === 'month') {
+                        return diffDays <= 30;
+                    }
+                }
+                
+                return true;
+            });
+            
+            renderTable();
+            updateStats();
+        }
+        
+        function renderTable() {
+            const tbody = document.getElementById('recordsBody');
+            const emptyState = document.getElementById('emptyState');
+            
+            tbody.innerHTML = '';
+            
+            if (filteredRecords.length === 0) {
+                emptyState.style.display = 'block';
+                document.getElementById('recordsTable').style.display = 'none';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            document.getElementById('recordsTable').style.display = 'table';
+            
+            // Sort by date descending
+            const sorted = [...filteredRecords].sort((a, b) => 
+                new Date(b.datetime) - new Date(a.datetime)
+            );
+            
+            sorted.forEach(record => {
+                const date = new Date(record.datetime);
+                const dateStr = date.toLocaleString();
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${dateStr}</td>
+                    <td><span class="bathroom-badge">${record.bathroom}</span></td>
+                    <td><strong>${record.initials}</strong></td>
+                    <td>
+                        <div class="tasks-list">
+                            ${record.tasks.map(task => `<div class="task-item">${task}</div>`).join('')}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateStats() {
+            const statsDiv = document.getElementById('stats');
+            
+            if (filteredRecords.length === 0) {
+                statsDiv.style.display = 'none';
+                return;
+            }
+            
+            statsDiv.style.display = 'grid';
+            
+            const totalRecords = filteredRecords.length;
+            const uniqueEmployees = new Set(filteredRecords.map(r => r.initials)).size;
+            const uniqueBathrooms = new Set(filteredRecords.map(r => r.bathroom)).size;
+            const completionRate = Math.round(
+                (filteredRecords.reduce((sum, r) => sum + r.tasks.length, 0) / 
+                (filteredRecords.length * 7)) * 100
+            );
+            
+            statsDiv.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${totalRecords}</div>
+                    <div class="stat-label">Cleanings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${uniqueEmployees}</div>
+                    <div class="stat-label">Employees</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${uniqueBathrooms}</div>
+                    <div class="stat-label">Bathrooms</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${completionRate}%</div>
+                    <div class="stat-label">Avg Tasks</div>
+                </div>
+            `;
+        }
+        
+        function showMessage(text, type) {
+            const msgDiv = document.getElementById('message');
+            msgDiv.textContent = text;
+            msgDiv.className = 'message ' + type;
+        }
+        
+        function switchToForm() {
+            window.location.href = 'index.html';
+        }
+        
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+        
+        // Load records on page load
+        loadRecords();
+    </script>
+</body>
+</html>
         
         @media (max-width: 768px) {
             .container {
