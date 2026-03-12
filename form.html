@@ -403,7 +403,7 @@
                     document.getElementById('datetime').value = `${year}-${month}-${day}T${hours}:${minutes}`;
                     setTimeout(() => {
                         window.location.href = 'index.html';
-                    }, 2000);
+                    }, 2500);
                 } else {
                     showMessage('Error submitting form. Please try again.', 'error');
                 }
@@ -419,6 +419,7 @@
             const msg = document.getElementById('message');
             msg.textContent = text;
             msg.className = 'message ' + type;
+            msg.style.display = 'block';
         }
         
         function showLoading(isLoading) {
