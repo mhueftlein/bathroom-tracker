@@ -208,6 +208,12 @@
             font-weight: bold;
         }
         
+        .task-item.completed {
+            color: #9ca3af;
+            text-decoration: line-through;
+            font-style: italic;
+        }
+        
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -321,6 +327,17 @@
         
         <div class="filters">
             <div class="filter-group">
+                <label for="checklistTypeFilter">Checklist Type:</label>
+                <select id="checklistTypeFilter" onchange="applyFilters()">
+                    <option value="all">All Types</option>
+                    <option value="bathroom">Bathroom Cleaning</option>
+                    <option value="opening">Opening Shift</option>
+                    <option value="closing">Closing Shift</option>
+                    <option value="weekly">Weekly Cleaning</option>
+                </select>
+            </div>
+            
+            <div class="filter-group" id="bathroomFilterGroup" style="display: none;">
                 <label for="bathroomFilter">Bathroom:</label>
                 <select id="bathroomFilter" onchange="applyFilters()">
                     <option value="all">All Bathrooms</option>
@@ -354,6 +371,7 @@
                     <thead>
                         <tr>
                             <th>Date & Time</th>
+                            <th>Type</th>
                             <th>Bathroom</th>
                             <th>Initials</th>
                             <th>Tasks Completed</th>
@@ -393,13 +411,29 @@
         }
         
         function applyFilters() {
+            const checklistTypeFilter = document.getElementById('checklistTypeFilter').value;
             const bathroomFilter = document.getElementById('bathroomFilter').value;
             const dateFilter = document.getElementById('dateFilter').value;
             
+            // Show/hide bathroom filter based on checklist type
+            const bathroomFilterGroup = document.getElementById('bathroomFilterGroup');
+            if (checklistTypeFilter === 'bathroom' || checklistTypeFilter === 'all') {
+                bathroomFilterGroup.style.display = 'block';
+            } else {
+                bathroomFilterGroup.style.display = 'none';
+            }
+            
             filteredRecords = allRecords.filter(record => {
-                // Bathroom filter
-                if (bathroomFilter !== 'all' && record.bathroom !== bathroomFilter) {
+                // Checklist type filter
+                if (checklistTypeFilter !== 'all' && record.checklistType !== checklistTypeFilter) {
                     return false;
+                }
+                
+                // Bathroom filter (only applies to bathroom checklists)
+                if (checklistTypeFilter === 'bathroom' || checklistTypeFilter === 'all') {
+                    if (bathroomFilter !== 'all' && record.bathroom !== bathroomFilter) {
+                        return false;
+                    }
                 }
                 
                 // Date filter
@@ -449,15 +483,30 @@
                 const date = new Date(record.datetime);
                 const dateStr = date.toLocaleString();
                 
+                // Format checklist type display
+                const typeDisplay = record.checklistType
+                    .replace(/_/g, ' ')
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+                
+                // Format bathroom display (show empty string if null/not applicable)
+                const bathroomDisplay = record.bathroom ? `<span class="bathroom-badge">${record.bathroom}</span>` : '−';
+                
+                // Render tasks with strikethrough for recently completed ones
+                const tasksHtml = record.tasks.map(task => {
+                    const taskClass = record.isWithinSevenDays ? 'completed' : '';
+                    return `<div class="task-item ${taskClass}">${task}</div>`;
+                }).join('');
+                
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${dateStr}</td>
-                    <td><span class="bathroom-badge">${record.bathroom}</span></td>
+                    <td>${typeDisplay}</td>
+                    <td>${bathroomDisplay}</td>
                     <td><strong>${record.initials}</strong></td>
                     <td>
-                        <div class="tasks-list">
-                            ${record.tasks.map(task => `<div class="task-item">${task}</div>`).join('')}
-                        </div>
+                        <div class="tasks-list">${tasksHtml}</div>
                     </td>
                 `;
                 tbody.appendChild(row);
@@ -476,16 +525,15 @@
             
             const totalRecords = filteredRecords.length;
             const uniqueEmployees = new Set(filteredRecords.map(r => r.initials)).size;
-            const uniqueBathrooms = new Set(filteredRecords.map(r => r.bathroom)).size;
-            const completionRate = Math.round(
-                (filteredRecords.reduce((sum, r) => sum + r.tasks.length, 0) / 
-                (filteredRecords.length * 7)) * 100
+            const uniqueBathrooms = new Set(filteredRecords.filter(r => r.bathroom).map(r => r.bathroom)).size;
+            const avgTasksPerRecord = Math.round(
+                filteredRecords.reduce((sum, r) => sum + r.tasks.length, 0) / filteredRecords.length
             );
             
             statsDiv.innerHTML = `
                 <div class="stat-card">
                     <div class="stat-value">${totalRecords}</div>
-                    <div class="stat-label">Cleanings</div>
+                    <div class="stat-label">Records</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">${uniqueEmployees}</div>
@@ -496,7 +544,7 @@
                     <div class="stat-label">Bathrooms</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">${completionRate}%</div>
+                    <div class="stat-value">${avgTasksPerRecord}</div>
                     <div class="stat-label">Avg Tasks</div>
                 </div>
             `;

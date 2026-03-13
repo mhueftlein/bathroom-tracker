@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cleaning Checklist</title>
+    <title>Weekly Cleaning Checklist</title>
     <style>
         * {
             margin: 0;
@@ -37,12 +37,13 @@
             letter-spacing: -0.5px;
         }
         
-        .bathroom-name {
-            color: #666;
-            font-size: 15px;
-            font-weight: 500;
-            text-transform: capitalize;
-            letter-spacing: 0.3px;
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            cursor: pointer;
+            color: #374151;
+            font-size: 14px;
         }
         
         .form-group {
@@ -97,22 +98,12 @@
             letter-spacing: 0.3px;
         }
         
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 16px;
-            cursor: pointer;
-        }
-        
-        .checkbox-group:last-child {
-            margin-bottom: 0;
-        }
-        
         input[type="checkbox"] {
             width: 18px;
             height: 18px;
             cursor: pointer;
             margin-right: 12px;
+            margin-top: 2px;
             accent-color: #1f2937;
             flex-shrink: 0;
         }
@@ -122,11 +113,17 @@
             flex: 1;
             color: #374151;
             font-size: 14px;
+            line-height: 1.5;
         }
         
         .checkbox-group input[type="checkbox"]:checked + .checkbox-label {
             color: #1f2937;
             font-weight: 500;
+        }
+        
+        .checkbox-group input[type="checkbox"]:checked + .checkbox-label.completed {
+            text-decoration: line-through;
+            color: #9ca3af;
         }
         
         .button-group {
@@ -155,10 +152,6 @@
         .submit-btn:hover:not(:disabled) {
             background: #111827;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        .submit-btn:active:not(:disabled) {
-            transform: scale(0.98);
         }
         
         .submit-btn:disabled {
@@ -235,27 +228,12 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
-        @media (max-width: 500px) {
-            .container {
-                padding: 0;
-            }
-            
-            h1 {
-                font-size: 28px;
-            }
-            
-            .button-group {
-                gap: 10px;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Checklist</h1>
-            <div class="bathroom-name" id="bathroomName">Loading...</div>
+            <h1>Weekly Cleaning</h1>
         </div>
         
         <div id="message" class="message"></div>
@@ -263,7 +241,7 @@
             <div class="spinner"></div>
         </div>
         
-        <form id="cleaningForm">
+        <form id="checklistForm">
             <div class="form-group">
                 <label for="initials">Employee Initials</label>
                 <input 
@@ -288,46 +266,79 @@
                 <div class="checklist-title">Complete the following:</div>
                 
                 <label class="checkbox-group">
-                    <input type="checkbox" name="tasks" value="Sweep and Mop Floors">
-                    <span class="checkbox-label">Sweep and Mop Floors</span>
+                    <input type="checkbox" name="tasks" value="Clean/empty garbage cans">
+                    <span class="checkbox-label">Clean/empty garbage cans</span>
                 </label>
                 
                 <label class="checkbox-group">
-                    <input type="checkbox" name="tasks" value="Empty Garbage Cans">
-                    <span class="checkbox-label">Empty Garbage Cans</span>
+                    <input type="checkbox" name="tasks" value="Clean sinks with commercial cleaner">
+                    <span class="checkbox-label">Clean sinks with commercial cleaner</span>
                 </label>
                 
                 <label class="checkbox-group">
-                    <input type="checkbox" name="tasks" value="Clean Counter and Sink">
-                    <span class="checkbox-label">Clean Counter and Sink</span>
+                    <input type="checkbox" name="tasks" value="Dust all shelving units - games/merch/bar">
+                    <span class="checkbox-label">Dust all shelving units - games/merch/bar</span>
                 </label>
                 
                 <label class="checkbox-group">
-                    <input type="checkbox" name="tasks" value="Clean Mirror">
-                    <span class="checkbox-label">Clean Mirror</span>
+                    <input type="checkbox" name="tasks" value="Wash all glassware/clean bar counter">
+                    <span class="checkbox-label">Wash all glassware/clean bar counter</span>
                 </label>
                 
                 <label class="checkbox-group">
-                    <input type="checkbox" name="tasks" value="Fill Toilet Paper/Paper Towel">
-                    <span class="checkbox-label">Fill Toilet Paper/Paper Towel</span>
+                    <input type="checkbox" name="tasks" value="Shake out/vacuum entrance mat">
+                    <span class="checkbox-label">Shake out/vacuum entrance mat</span>
                 </label>
                 
                 <label class="checkbox-group">
-                    <input type="checkbox" name="tasks" value="Wipe Down Urinal and Toilet">
-                    <span class="checkbox-label">Wipe Down Urinal and Toilet</span>
+                    <input type="checkbox" name="tasks" value="Sweep/mop stairs">
+                    <span class="checkbox-label">Sweep/mop stairs</span>
                 </label>
                 
                 <label class="checkbox-group">
-                    <input type="checkbox" name="tasks" value="Wipe Down Walls">
-                    <span class="checkbox-label">Wipe Down Walls</span>
+                    <input type="checkbox" name="tasks" value="Clean bar siding">
+                    <span class="checkbox-label">Clean bar siding</span>
                 </label>
                 
-                <div id="babyChangeContainer" style="display: none;">
-                    <label class="checkbox-group">
-                        <input type="checkbox" name="tasks" value="Wipe Down Baby Change Table">
-                        <span class="checkbox-label">Wipe Down Baby Change Table</span>
-                    </label>
-                </div>
+                <label class="checkbox-group">
+                    <input type="checkbox" name="tasks" value="Windex front/back doors">
+                    <span class="checkbox-label">Windex front/back doors</span>
+                </label>
+                
+                <label class="checkbox-group">
+                    <input type="checkbox" name="tasks" value="Clean bottom/doors of the fridge">
+                    <span class="checkbox-label">Clean bottom/doors of the fridge</span>
+                </label>
+                
+                <label class="checkbox-group">
+                    <input type="checkbox" name="tasks" value="Clean railing top, bottom and panels">
+                    <span class="checkbox-label">Clean railing top, bottom and panels</span>
+                </label>
+                
+                <label class="checkbox-group">
+                    <input type="checkbox" name="tasks" value="Clean bottom of tables">
+                    <span class="checkbox-label">Clean bottom of tables</span>
+                </label>
+                
+                <label class="checkbox-group">
+                    <input type="checkbox" name="tasks" value="Clean bottoms of stools/benches & tops">
+                    <span class="checkbox-label">Clean bottoms of stools/benches & tops</span>
+                </label>
+                
+                <label class="checkbox-group">
+                    <input type="checkbox" name="tasks" value="Clean window sills outside">
+                    <span class="checkbox-label">Clean window sills outside</span>
+                </label>
+                
+                <label class="checkbox-group">
+                    <input type="checkbox" name="tasks" value="Clean window sills front/back">
+                    <span class="checkbox-label">Clean window sills front/back</span>
+                </label>
+                
+                <label class="checkbox-group">
+                    <input type="checkbox" name="tasks" value="Dust lamp shades">
+                    <span class="checkbox-label">Dust lamp shades</span>
+                </label>
             </div>
             
             <div class="button-group">
@@ -338,15 +349,7 @@
     </div>
     
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const bathroom = params.get('bathroom') || 'unknown';
-        
-        document.getElementById('bathroomName').textContent = bathroom.charAt(0).toUpperCase() + bathroom.slice(1) + ' Bathroom';
-        
-        // Show baby change table checkbox only for accessible bathroom
-        if (bathroom === 'accessible') {
-            document.getElementById('babyChangeContainer').style.display = 'block';
-        }
+        const checklistType = 'weekly';
         
         // Set current date and time
         const now = new Date();
@@ -358,7 +361,7 @@
         document.getElementById('datetime').value = `${year}-${month}-${day}T${hours}:${minutes}`;
         
         // Handle form submission
-        document.getElementById('cleaningForm').addEventListener('submit', async (e) => {
+        document.getElementById('checklistForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const initials = document.getElementById('initials').value.toUpperCase().trim();
@@ -384,8 +387,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        checklist_type: 'bathroom',
-                        bathroom: bathroom,
+                        checklist_type: checklistType,
                         initials: initials,
                         datetime: datetime,
                         tasks: checkedTasks
@@ -393,8 +395,8 @@
                 });
                 
                 if (response.ok) {
-                    showMessage('Cleaning record submitted successfully', 'success');
-                    document.getElementById('cleaningForm').reset();
+                    showMessage('Checklist submitted successfully', 'success');
+                    document.getElementById('checklistForm').reset();
                     const now = new Date();
                     const year = now.getFullYear();
                     const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -404,7 +406,7 @@
                     document.getElementById('datetime').value = `${year}-${month}-${day}T${hours}:${minutes}`;
                     setTimeout(() => {
                         window.location.href = 'index.html';
-                    }, 2500);
+                    }, 3500);
                 } else {
                     showMessage('Error submitting form. Please try again.', 'error');
                 }
@@ -425,8 +427,8 @@
         
         function showLoading(isLoading) {
             document.getElementById('loading').style.display = isLoading ? 'block' : 'none';
-            document.getElementById('cleaningForm').style.pointerEvents = isLoading ? 'none' : 'auto';
-            document.getElementById('cleaningForm').style.opacity = isLoading ? '0.6' : '1';
+            document.getElementById('checklistForm').style.pointerEvents = isLoading ? 'none' : 'auto';
+            document.getElementById('checklistForm').style.opacity = isLoading ? '0.6' : '1';
         }
     </script>
 </body>

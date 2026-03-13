@@ -30,18 +30,28 @@ exports.handler = async (event, context) => {
 
     try {
         const data = JSON.parse(event.body);
-        const { bathroom, initials, datetime, tasks } = data;
+        const { checklist_type, bathroom, initials, datetime, tasks } = data;
 
-        if (!bathroom || !initials || !datetime || !tasks) {
+        // Validate required fields
+        if (!checklist_type || !initials || !datetime || !tasks) {
             return {
                 statusCode: 400,
                 body: JSON.stringify({ error: 'Missing required fields' }),
             };
         }
 
+        // For bathroom checklists, bathroom is required
+        if (checklist_type === 'bathroom' && !bathroom) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ error: 'Bathroom type required for bathroom checklists' }),
+            };
+        }
+
         // Format the data for Google Sheets
         const timestamp = new Date(datetime).toLocaleString();
         const tasksString = tasks.join(', ');
+        const bathroomValue = bathroom || '';
 
         const auth = new google.auth.JWT({
             email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -50,14 +60,15 @@ exports.handler = async (event, context) => {
         });
 
         // Append data to Google Sheet
+        // Columns: Timestamp (Date), Timestamp (Time), Checklist Type, Bathroom, Initials, Tasks
         await sheets.spreadsheets.values.append({
             auth,
             spreadsheetId: process.env.GOOGLE_SHEETS_ID,
-            range: 'Sheet1!A:D',
+            range: 'Sheet1!A:F',
             valueInputOption: 'USER_ENTERED',
             resource: {
                 values: [
-                    [timestamp.split(',')[0], timestamp.split(',')[1]?.trim() || '', bathroom, initials, tasksString],
+                    [timestamp.split(',')[0], timestamp.split(',')[1]?.trim() || '', checklist_type, bathroomValue, initials, tasksString],
                 ],
             },
         });

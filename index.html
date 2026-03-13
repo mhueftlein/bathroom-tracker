@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bathroom Cleaning Tracker</title>
+    <title>Facility Checklists</title>
     <style>
         * {
             margin: 0;
@@ -130,17 +130,29 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Bathroom Cleaning</h1>
-            <p class="subtitle">Select the room you're cleaning</p>
+            <h1>Facility Checklists</h1>
+            <p class="subtitle">Select a checklist to complete</p>
         </div>
         
-        <div class="button-grid">
-            <a href="form.html?bathroom=mens" class="washroom-btn">Mens</a>
-            <a href="form.html?bathroom=womens" class="washroom-btn">Womens</a>
-            <a href="form.html?bathroom=accessible" class="washroom-btn">Accessible</a>
+        <div style="margin-bottom: 32px;">
+            <div style="color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; padding: 0 4px;">Bathroom Cleaning</div>
+            <div class="button-grid">
+                <a href="form.html?bathroom=mens" class="washroom-btn">Mens</a>
+                <a href="form.html?bathroom=womens" class="washroom-btn">Womens</a>
+                <a href="form.html?bathroom=accessible" class="washroom-btn">Accessible</a>
+            </div>
         </div>
         
-        <div class="divider">More</div>
+        <div style="margin-bottom: 32px;">
+            <div style="color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; padding: 0 4px;">Shift Checklists</div>
+            <div class="button-grid">
+                <a href="opening.html" class="washroom-btn">Opening Shift</a>
+                <a href="closing.html" class="washroom-btn">Closing Shift</a>
+                <a href="weekly.html" class="washroom-btn">Weekly Cleaning</a>
+            </div>
+        </div>
+        
+        <div class="divider">Admin</div>
         
         <div class="admin-links">
             <a href="dashboard.html" class="admin-btn">View Records</a>
