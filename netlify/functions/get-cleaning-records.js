@@ -45,17 +45,54 @@ exports.handler = async (event, context) => {
             const initials = row[4] || '';
             const tasksStr = row[5] || '';
 
-            // Combine date and time into full datetime
-            const datetime = `${dateStr} ${timeStr}`.trim();
-            const recordDate = new Date(datetime);
+            // Parse date and time more carefully
+            // dateStr format: "3/13/2026" timeStr format: "2:30:45 PM"
+            let recordDate = null;
+            try {
+                // Try parsing US format: M/D/YYYY H:MM:SS AM/PM
+                const dateTimeStr = `${dateStr} ${timeStr}`.trim();
+                recordDate = new Date(dateTimeStr);
+                
+                // If parsing failed or gives invalid date, try alternative parsing
+                if (isNaN(recordDate.getTime())) {
+                    // Manual parsing for M/D/YYYY format
+                    const dateParts = dateStr.split('/');
+                    const timeParts = timeStr.match(/(\d+):(\d+):(\d+)\s*(AM|PM)/i);
+                    
+                    if (dateParts.length === 3 && timeParts) {
+                        let month = parseInt(dateParts[0]) - 1; // JS months are 0-indexed
+                        let day = parseInt(dateParts[1]);
+                        let year = parseInt(dateParts[2]);
+                        let hours = parseInt(timeParts[1]);
+                        let minutes = parseInt(timeParts[2]);
+                        let seconds = parseInt(timeParts[3]) || 0;
+                        let period = timeParts[4].toUpperCase();
+                        
+                        // Convert to 24-hour format
+                        if (period === 'PM' && hours !== 12) {
+                            hours += 12;
+                        } else if (period === 'AM' && hours === 12) {
+                            hours = 0;
+                        }
+                        
+                        recordDate = new Date(year, month, day, hours, minutes, seconds);
+                    }
+                }
+            } catch (e) {
+                recordDate = new Date(0); // Fallback to epoch if parsing fails
+            }
 
             // Check if this record is within the last 7 days
-            const isWithinSevenDays = recordDate >= sevenDaysAgo && recordDate <= now;
+            // Only mark as within 7 days if it's a valid date and actually recent
+            const isWithinSevenDays = recordDate && 
+                                     !isNaN(recordDate.getTime()) &&
+                                     recordDate >= sevenDaysAgo && 
+                                     recordDate <= now;
 
             const tasks = tasksStr ? tasksStr.split(',').map(t => t.trim()).filter(t => t) : [];
 
             return {
-                datetime: datetime,
+                datetime: `${dateStr} ${timeStr}`.trim(),
                 checklistType: checklistType,
                 bathroom: bathroom || null,
                 initials: initials,
