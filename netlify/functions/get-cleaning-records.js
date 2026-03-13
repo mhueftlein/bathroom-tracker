@@ -97,7 +97,6 @@ exports.handler = async (event, context) => {
                 bathroom: bathroom || null,
                 initials: initials,
                 tasks: tasks,
-                isWithinSevenDays: isWithinSevenDays,
             };
         }).filter(record => record.initials); // Only include rows with initials
 

@@ -208,12 +208,6 @@
             font-weight: bold;
         }
         
-        .task-item.completed {
-            color: #9ca3af;
-            text-decoration: line-through;
-            font-style: italic;
-        }
-        
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -493,10 +487,9 @@
                 // Format bathroom display (show empty string if null/not applicable)
                 const bathroomDisplay = record.bathroom ? `<span class="bathroom-badge">${record.bathroom}</span>` : '−';
                 
-                // Render tasks with strikethrough for recently completed ones
+                // Render tasks
                 const tasksHtml = record.tasks.map(task => {
-                    const taskClass = record.isWithinSevenDays ? 'completed' : '';
-                    return `<div class="task-item ${taskClass}">${task}</div>`;
+                    return `<div class="task-item">${task}</div>`;
                 }).join('');
                 
                 const row = document.createElement('tr');

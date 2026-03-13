@@ -119,9 +119,10 @@
             font-weight: 500;
         }
         
-        .checkbox-group input[type="checkbox"]:checked + .checkbox-label.completed {
+        .checkbox-label.completed {
             text-decoration: line-through;
             color: #9ca3af;
+            font-style: italic;
         }
         
         .button-group {
@@ -393,6 +394,45 @@
             document.getElementById('checklistForm').style.pointerEvents = isLoading ? 'none' : 'auto';
             document.getElementById('checklistForm').style.opacity = isLoading ? '0.6' : '1';
         }
+        
+        // Load recent tasks from past 7 days
+        async function loadRecentTasks() {
+            try {
+                const response = await fetch('/.netlify/functions/get-cleaning-records');
+                if (!response.ok) return;
+                
+                const records = await response.json();
+                const now = new Date();
+                const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                
+                // Find all tasks for this checklist type completed in the last 7 days
+                const recentTasks = new Set();
+                records.forEach(record => {
+                    if (record.checklistType === checklistType) {
+                        const recordDate = new Date(record.datetime);
+                        if (recordDate >= sevenDaysAgo && recordDate <= now) {
+                            record.tasks.forEach(task => recentTasks.add(task));
+                        }
+                    }
+                });
+                
+                // Mark recent tasks with strikethrough
+                const checkboxes = document.querySelectorAll('input[name="tasks"]');
+                checkboxes.forEach(checkbox => {
+                    if (recentTasks.has(checkbox.value)) {
+                        const label = checkbox.nextElementSibling;
+                        if (label) {
+                            label.classList.add('completed');
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading recent tasks:', error);
+            }
+        }
+        
+        // Load recent tasks on page load
+        document.addEventListener('DOMContentLoaded', loadRecentTasks);
     </script>
 </body>
 </html>
